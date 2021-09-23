@@ -1,0 +1,34 @@
+{
+	"version":   "2.0.0",
+	"tasks":  [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "cargo",
+            "args": [
+                "build"
+            ]
+        },
+        {
+            "type": "cargo",
+            "subcommand": "",
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "label": "rust: cargo build"
+        },
+        {
+            "type": "cargo",
+            "subcommand": "build",
+            "problemMatcher": [
+                "$rustc"
+            ],
+            "group": "build",
+            "label": "Rust: cargo build - greeting"
+        }
+    ]
+}
