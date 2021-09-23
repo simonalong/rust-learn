@@ -33,9 +33,12 @@ fn test_print3() {
 fn test_print4() {
     let mut b: i32 = 12;
     println!("test_print4-1 {}", b);
-    b = 32;
 
+    b = 32;
     println!("test_print4-2 {}", b);
+
+    // b = "haode";
+    // println!("test_print4-3 {}", b);
 }
 
 // 测试常量
