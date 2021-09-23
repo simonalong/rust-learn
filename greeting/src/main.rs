@@ -63,7 +63,7 @@ fn test_loop2(x: i32) {
     let mut index = 0;
     loop {
         if index+1 >= array.len() {
-            index = 0;
+            break;
         }
         if array[index] >= x {
             break;
