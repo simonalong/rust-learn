@@ -34,3 +34,4 @@ fn test_print4() {
 
     println!("test_print4-2 {}", b);
 }
+
