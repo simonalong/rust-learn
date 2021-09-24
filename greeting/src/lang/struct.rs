@@ -1,7 +1,7 @@
 ///
-/// 
-/// 这个概念与go里面的slice有点像，不过go里面这个切片是可变数组，但是在Rust这里，切片就是把结构中的数据进行切片处理
-/// 
+///
+/// 测试结构体
+///
 /// ### 测试：切片
 fn main() {
     test_struct_1();
@@ -18,15 +18,14 @@ fn main() {
 #[derive(Debug)]
 struct MyClass {
     name: String,
-    age: i32
+    age: i32,
 }
 
 // 测试结构体
 fn test_struct_1() {
-
-    let my = MyClass{
+    let my = MyClass {
         name: String::from("nihao"),
-        age: 12
+        age: 12,
     };
     println!("test_struct_1: name= {}, age={}", my.name, my.age);
 }
@@ -37,11 +36,10 @@ fn test_struct_2() {
     println!("test_struct_1: name= {}, age={}", my.0, my.1);
 }
 
-
 fn test_struct_3() {
-    let my = MyClass{
+    let my = MyClass {
         name: String::from("nihao"),
-        age: 12
+        age: 12,
     };
 
     let my2 = MyClass {
@@ -62,7 +60,10 @@ fn test_struct_4() {
 }
 
 fn test_struct_5() {
-    let my1 = MyClass{ name: String::from("zhou"), age: 12};
+    let my1 = MyClass {
+        name: String::from("zhou"),
+        age: 12,
+    };
     let my2 = (String::from("zhou"), 12);
     let my3 = MyClass2(String::from("zhou"), 12);
 
@@ -75,7 +76,10 @@ fn test_struct_5() {
 }
 
 fn test_struct_6() {
-    let my1 = MyClass{ name: String::from("zhou"), age: 12};
+    let my1 = MyClass {
+        name: String::from("zhou"),
+        age: 12,
+    };
     let my2 = (String::from("zhou"), 12);
     let my3 = MyClass2(String::from("zhou"), 12);
 
@@ -102,10 +106,10 @@ fn test_struct_6() {
     println!("test_struct_5: {:#?}", my3);
 }
 
-struct MyClass3{
+struct MyClass3 {
     name: String,
     age: i32,
-    addrss: String
+    addrss: String,
 }
 
 impl MyClass3 {
@@ -119,13 +123,17 @@ impl MyClass3 {
         &self.name
     }
 
-    fn add_data(a:i32, b:i32) -> i32 {
+    fn add_data(a: i32, b: i32) -> i32 {
         a + b
     }
 }
 
 fn test_struct_7() {
-    let a = MyClass3{name: String::from("zhou"), age:12, addrss: String::from("hangzhou")};
+    let a = MyClass3 {
+        name: String::from("zhou"),
+        age: 12,
+        addrss: String::from("hangzhou"),
+    };
 
     println!("test_struct_7: name={}, age={}", a.get_name(), a.get_age());
 }
@@ -138,7 +146,7 @@ fn test_struct_8() {
 struct Math;
 
 impl Math {
-    fn add_data(a:i32, b:i32) -> i32 {
+    fn add_data(a: i32, b: i32) -> i32 {
         a + b
     }
 }

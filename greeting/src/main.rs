@@ -1,147 +1,159 @@
 ///
-/// 
-/// 这个概念与go里面的slice有点像，不过go里面这个切片是可变数组，但是在Rust这里，切片就是把结构中的数据进行切片处理
-/// 
-/// ### 测试：切片
+///
+/// 测试枚举类
+///
 fn main() {
-    test_struct_1();
-    test_struct_2();
-    test_struct_3();
-    test_struct_4();
-    test_struct_5();
-    test_struct_6();
-    test_struct_7();
-    test_struct_8();
-    test_struct_9();
+    test_enum_1();
+    test_enum_2();
+    test_enum_3();
+    test_enum_4();
+    test_enum_5();
+    match_test();
+    test_enum_option();
+    test_enum_option2();
+    test_enum_option3();
+    test_enum_option4();
 }
 
 #[derive(Debug)]
-struct MyClass {
-    name: String,
-    age: i32
+enum ChannelEnum {
+    Open,
+    Close,
+}
+fn test_enum_1() {
+    let status1 = ChannelEnum::Open;
+    println!("test_enum_1 {:?}", status1);
+
+    let status2 = ChannelEnum::Close;
+    println!("test_enum_1 {:?}", status2);
 }
 
-// 测试结构体
-fn test_struct_1() {
+fn test_enum_2() {
+    let status1 = ChannelEnum::Open;
 
-    let my = MyClass{
-        name: String::from("nihao"),
-        age: 12
+    // 这里通过
+    match status1 {
+        ChannelEnum::Close => {
+            println!("close");
+        }
+        ChannelEnum::Open => {
+            println!("open");
+        }
+    }
+}
+
+enum Book {
+    ZhiBook { name: String },
+    ElecBook { url: String },
+}
+
+fn test_enum_3() {
+    let book = Book::ZhiBook {
+        name: String::from("java书"),
     };
-    println!("test_struct_1: name= {}, age={}", my.name, my.age);
-}
 
-// 测试元组
-fn test_struct_2() {
-    let my = (String::from("nihao"), 12);
-    println!("test_struct_1: name= {}, age={}", my.0, my.1);
-}
+    match book {
+        Book::ZhiBook { name } => {
+            println!("book {}", name);
+        }
 
-
-fn test_struct_3() {
-    let my = MyClass{
-        name: String::from("nihao"),
-        age: 12
-    };
-
-    let my2 = MyClass {
-        name: String::from("haode"),
-        ..my
-    };
-    println!("test_struct_3: name= {}, age={}", my2.name, my2.age);
-}
-
-#[derive(Debug)]
-struct MyClass2(String, i32);
-
-// 测试元组结构
-fn test_struct_4() {
-    let my = MyClass2(String::from("nihao"), 21);
-
-    println!("test_struct_4: name= {}, age={}", my.0, my.1);
-}
-
-fn test_struct_5() {
-    let my1 = MyClass{ name: String::from("zhou"), age: 12};
-    let my2 = (String::from("zhou"), 12);
-    let my3 = MyClass2(String::from("zhou"), 12);
-
-    // test_struct_5: MyClass { name: "zhou", age: 12 }
-    println!("test_struct_5: {:?}", my1);
-    // test_struct_5: ("zhou", 12)
-    println!("test_struct_5: {:?}", my2);
-    // test_struct_5: MyClass2("zhou", 12)
-    println!("test_struct_5: {:?}", my3);
-}
-
-fn test_struct_6() {
-    let my1 = MyClass{ name: String::from("zhou"), age: 12};
-    let my2 = (String::from("zhou"), 12);
-    let my3 = MyClass2(String::from("zhou"), 12);
-
-    /*
-    test_struct_5: MyClass {
-        name: "zhou",
-        age: 12,
-    }
-    */
-    println!("test_struct_5: {:#?}", my1);
-    /*
-    test_struct_5: (
-        "zhou",
-        12,
-    )
-    */
-    println!("test_struct_5: {:#?}", my2);
-    /*
-    test_struct_5: MyClass2(
-        "zhou",
-        12,
-    )
-    */
-    println!("test_struct_5: {:#?}", my3);
-}
-
-struct MyClass3{
-    name: String,
-    age: i32,
-}
-
-impl MyClass3 {
-    // 基本结构返回值，直接类型即可
-    fn get_age(&self) -> i32 {
-        self.age
-    }
-
-    // 结构类型返回值，需要借用
-    fn get_name(&self) -> &String {
-        &self.name
-    }
-
-    fn add_data(a:i32, b:i32) -> i32 {
-        a + b
+        Book::ElecBook { url } => {
+            println!("book {}", url);
+        }
     }
 }
 
-fn test_struct_7() {
-    let a = MyClass3{name: String::from("zhou"), age:12};
-
-    println!("test_struct_7: name={}, age={}", a.get_name(), a.get_age());
+enum Book2 {
+    ZhiBook(String),
+    ElecBook(i32),
 }
 
-fn test_struct_8() {
-    println!("test_struct_8: 1+3={}", MyClass3::add_data(1, 3));
-}
+fn test_enum_4() {
+    let book = Book2::ZhiBook(String::from("java书"));
 
-// 单元结构体
-struct Math;
+    match book {
+        Book2::ZhiBook(url) => {
+            println!("book {}", url);
+        }
 
-impl Math {
-    fn add_data(a:i32, b:i32) -> i32 {
-        a + b
+        Book2::ElecBook(size) => {
+            println!("book {}", size);
+        }
     }
 }
 
-fn test_struct_9() {
-    println!("test_struct_9: 1+3={}", Math::add_data(1, 3));
+enum Book3 {
+    ZhiBook(String),
+    ElecBook(i32),
+    ElecBook2(i32)
+}
+
+fn test_enum_5() {
+    let book = Book3::ZhiBook(String::from("java书"));
+    if let Book3::ElecBook(size) = book {
+        println!("enum_5 1 {}", size);
+    }  else if let Book3::ZhiBook(name) = book{
+        println!("enum_5 1 {}", name);
+    } else {
+        println!("enum_5 1 ");
+    }
+}
+
+fn match_test() {
+    let data = 122;
+    match data {
+        12 => {
+            println!("12")
+        }
+        _ => {
+            println!("meiyoupipei")
+        }
+    }
+}
+
+// 测试option枚举
+fn test_enum_option() {
+    let data = Option::Some(String::from("nihao"));
+    match data {
+        Option::Some(data) => {
+            println!("test_enum_option {}", data);
+        }
+        Option::None => {
+            println!("kong");
+        }
+    }
+}
+
+fn test_enum_option2() {
+    let data: Option<String> = None;
+    match data {
+        Some(data) => {
+            println!("test_enum_option {}", data);
+        }
+        None => {
+            println!("kong");
+        }
+    }
+}
+
+fn test_enum_option3() {
+    let data: Option<String> = None;
+    match data {
+        Some(data) => {
+            println!("test_enum_option {}", data);
+        }
+        _ => {
+            println!("kong");
+        }
+    }
+}
+
+// 简化写法
+fn test_enum_option4() {
+    let data: Option<String> = None;
+    if let Some(data) = data {
+        println!("test_enum_option {}", data);
+    } else {
+        println!("kong");
+    }
 }
