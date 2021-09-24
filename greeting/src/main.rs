@@ -105,7 +105,6 @@ fn test_struct_6() {
 struct MyClass3{
     name: String,
     age: i32,
-    addrss: String
 }
 
 impl MyClass3 {
@@ -125,7 +124,7 @@ impl MyClass3 {
 }
 
 fn test_struct_7() {
-    let a = MyClass3{name: String::from("zhou"), age:12, addrss: String::from("hangzhou")};
+    let a = MyClass3{name: String::from("zhou"), age:12};
 
     println!("test_struct_7: name={}, age={}", a.get_name(), a.get_age());
 }
