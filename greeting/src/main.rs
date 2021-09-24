@@ -1,167 +1,65 @@
 
 ///
 /// 
-/// ### 测试：所有权测试
+/// 这个概念与go里面的slice有点像，不过go里面这个切片是可变数组，但是在Rust这里，切片就是把结构中的数据进行切片处理
 /// 
+/// ### 测试：切片
 fn main() {
-    test_owner_1(); 
-    test_owner_2();
-    test_owner_3();
-    test_owner_4();
-    test_owner_5();
-    test_owner_6();
-    test_owner_7();
-    test_owner_8();
-    test_owner_9();
-    test_owner_10();
-    test_owner_11();
-    test_owner_12();
-    test_owner_13();
+    test_slice_1();
+    test_slice_2();
+    test_slice_3();
+    test_slice_4();
+    test_slice_array();
 }
 
-fn test_owner_1() {
-    let s1 = String::from("haode");
+// 测试切片：字符串的切片
+fn test_slice_1() {
+    let a = String::from("nihao");
 
-    println!("test_owner1 {}", &s1);
+    // 下面这种切片就是错的，切片就是要做借用才行
+    //let b = a[0..2];
+    let b = &a[0..2];
+    println!("test_slice_1 {}", b);
 }
 
-fn test_owner_2() {
-    let s1 = String::from("haode");
-    // 赋值后，s1就失效了
-    let s2 = s1;
+// 测试切片：..的使用
+fn test_slice_2() {
+    let a = String::from("我们都是");
 
-    println!("test_owner_2 {}", &s2);
+    // let b = &a[..1]; // 等价于[0..2]
+    // let b = &a[1..];  // 等价于[1..end]
+    // let b = &a[..];  // 等价于&a
+    // println!("test_slice_1 {}", b);
 }
 
-fn test_owner_3() {
-    let s1 = String::from("haode");
-    // 赋值后，s1就失效了
-    let s2 = s1.clone();
+// 测试切片：一旦数据被分片租借，则不可在修改原始的数据
+fn test_slice_3() {
+    let a = String::from("nihao");
 
-    println!("test_owner_3 {}", &s1);
-    println!("test_owner_3 {}", &s2);
+    let tem = &a[..2];
+    // 下面这句话是有问题的
+    //a.push_str(" haode");
+
+    println!("test_slise_3 {}", a);
 }
 
-// 基本变量赋值没有问题，因为基本类型在赋值的时候，其实是栈里面做了克隆
-fn test_owner_4() {
-    let s1 = 1;
-    // 赋值后，s1就失效了
-    let s2 = s1;
+// 测试字符串的转换
+fn test_slice_4() {
 
-    println!("test_owner_4 {}", &s1);
-    println!("test_owner_4 {}", &s2);
+    let b = &String::from("nihao")[..];
+
+    println!("test_slice_4 {}", b);
+
+    let c = String::from(b);
+
+    println!("test_slice_4 2 {}", c);
 }
 
-// 测试经过函数后的失效
-fn test_owner_5() {
-    let s1 = String::from("test_owner_5");
-
-    // s1进去后就会失效了
-    test_fun1(s1);
-
-    // s1失效，这个时候，如下访问会有问题
-    //println!("test_owner_4 {}", s1);
+// 测试分片：数组
+fn test_slice_array() {
+    let a= [3, 123, 43, 23];
+    let b = &a[..3];
+    for data in b.iter() {
+        println!("test_slice_arrya {}", data);
+    }
 }
-
-fn test_fun1(name: String) {
-    println!("test_fun1 {}", name);
-}
-
-// 测试经过函数后的失效
-fn test_owner_6() {
-    let s1 = String::from("test_owner_6");
-
-    // s1进去后就会失效了
-    let s2 = test_fun2(s1);
-
-    // s1失效，这个时候，如下访问会有问题
-    println!("test_owner_6 {}", s2);
-}
-
-fn test_fun2(name: String) -> String {
-    println!("test_fun2 {}", name);
-    return String::from("haode");
-}
-
-// 测试租借
-fn test_owner_7() {
-    let a = String::from("test");
-
-    let b = &a;
-
-    println!("test_owner_7 {}", a);
-    println!("test_owner_7 {}", b);
-}
-
-// 测试租借
-fn test_owner_8() {
-    let a = String::from("test");
-    let b = &a;
-    let c = a;
-
-    // 现在b虽然借了a，但是b并没有a的所有权，而a后来把所有权给了c，因此b就是失效了
-    //println!("test_owner_7 {}", a);
-    //println!("test_owner_7 {}", b);
-    println!("test_owner_8 {}", c);
-}
-
-// 测试租借：一旦被借走，则原来的值就不能修改数据了
-fn test_owner_9() {
-    let mut a = String::from("test");
-    let b= &a;
-
-    // 下面报错
-    // a.push_str("newData");
-    println!("test_owner_9 a: {}", a);
-    println!("test_owner_9 a: {}", b);
-}
-
-// 测试租借：一旦被借走，则原来的值就不能修改数据了
-fn test_owner_10() {
-    let mut a = String::from("test");
-    let b= &mut a;
-
-    b.clear();
-    b.push_str("newData");
-    println!("test_owner_10 a: {}", b);
-}
-
-// 测试租借：只能借可变权给一个引用
-fn test_owner_11() {
-    let a = String::from("test");
-    let b= &a;
-    let c= &a;
-
-    println!("test_owner_11 {}", a);
-    println!("test_owner_11 {}", b);
-    println!("test_owner_11 {}", c);
-}
-
-// 测试租借：只能借可变权给一个引用
-fn test_owner_12() {
-    let mut a = String::from("test");
-    let b= &mut a;
-    // 如果再租借个一个，则会报错
-    // let c= &mut a;
-
-    println!("test_owner_11 {}", b);
-}
-
-fn test_owner_13() {
-    let data = test_fun3();
-    println!("test_owner_13 {}", data);
-}
-
-fn test_fun3() -> String {
-    return String::from("haode");
-}
-
-// fn test_owner_14() {
-//     let data = test_fun3();
-//     println!("test_owner_14 {}", data);
-// }
-
-// // 下面这种租借就有问题，或者说这总叫做悬垂引用，这种就是租借的值其实真的已经不再存在了
-// fn test_fun4() -> &String {
-//     return &String::from("haode");
-// }
