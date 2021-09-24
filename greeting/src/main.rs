@@ -9,7 +9,7 @@ fn main() {
     test_for();
     test_for2();
     test_loop();
-    test_loop2(321);
+    test_loop2(32);
 }
 
 // 测试while
@@ -61,15 +61,17 @@ fn test_loop() {
 fn test_loop2(x: i32) {
     let array = [1, 32, 43, 4, 54];
     let mut index = 0;
-    loop {
+    let result = loop {
         if index+1 >= array.len() {
-            break;
+            break 0;
         }
-        if array[index] >= x {
-            break;
+        if array[index] == x {
+            break index;
         }
         println!("loop data2 = {}", array[index]);
 
         index+=1;
-    }
+    };
+
+    println!("result {}", result);
 }
