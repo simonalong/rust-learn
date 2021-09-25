@@ -1,8 +1,8 @@
 ///
-/// 
+///
 /// 测试：函数
-/// 
-/// 
+///
+///
 fn main() {
     test_fun1();
     test_fun2(12, 32);
@@ -15,7 +15,7 @@ fn main() {
 }
 
 // 函数命名是小写字母和下划线进行拼接
-fn test_fun1() {
+pub fn test_fun1() {
     println!("test_fun1");
 }
 
