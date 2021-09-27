@@ -13,6 +13,7 @@ fn main() {
     test_vec_7();
 }
 
+// 集合创建后添加数据
 fn test_vec_1() {
     let mut ve1 = Vec::new();
     ve1.push(12);

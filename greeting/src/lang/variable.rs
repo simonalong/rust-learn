@@ -119,4 +119,9 @@ fn test_array() {
     let mut c = [0;4];
     c[0] = 12;
     println!("test_array_mut_c_0:{}", c[0]);
+
+    // 表示, f32类型的，初始值为0的，数组长度为4的变量
+    let mut c = [0f32;4];
+    c[0] = 12;
+    println!("test_array_mut_c_0:{}", c[0]);
 }
