@@ -79,7 +79,6 @@ fn test_3() {
     println!("inc(5) = {}", inc(5));
 }
 
-
 // 测试闭包
 fn test_4() {
     let data = |num:i32| -> i32{
@@ -94,4 +93,10 @@ fn test_4() {
     };
     // 22
     println!("{}", data(21));
+
+    let add = |a, b|{
+        a+b
+    };
+    // 22
+    println!("{}", add(2, 3));
 }
