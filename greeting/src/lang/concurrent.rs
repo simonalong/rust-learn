@@ -1,13 +1,13 @@
 use std::{sync::mpsc, time::Duration};
 
 
-
 fn main() {
     test_thread_1();
     test_thread_2();
     test_thread_3();
     test_thread_4();
     test_thread_5();
+    test_thread_6();
 }
 
 // 测试线程
@@ -62,3 +62,12 @@ fn test_thread_5() {
     let data = rx.recv().unwrap();
     println!("test_thread_5 receive {}", data);
 }
+
+fn test_thread_6() {
+    let data = || {
+        println!("test_thread_6");
+    };
+
+    std::thread::spawn(data);
+}
+

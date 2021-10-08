@@ -45,19 +45,19 @@ fn test_float() {
 
 // 测试bool类型
 fn test_bool() {
-    let a = true;
+    let a:bool = true;
     println!("test_bool {}", a);
 
-    let a = false;
+    let a:bool = false;
     println!("test_bool {}", a);
 }
 
 // 测试str
 fn test_str() {
-    let a = "nihao";
+    let a:&str = "nihao";
     println!("test_str {}", a);
 
-    let a = 12;
+    let a:&str = 12;
     println!("test_str {}", a);
 }
 
