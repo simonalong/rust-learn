@@ -4,6 +4,7 @@ fn main() {
     test_closure_2();
     test_closure_3();
     test_closure_4();
+    test_closure_5();
 }
 
 // 作为函数直接调用
@@ -67,6 +68,59 @@ fn test_closure_3() {
 
 // 闭包做函数入参
 fn test_closure_4() {
-
+    test_fun(||{println!("inner")});
+    test_fun1(|x:i32|{println!("inner2: {}", x);});
+    test_fun2(|x:i32, _|{println!("inner3: {}", x);});
+    test_fun3(|x|{println!("inner4: {}", x);32});
+    test_fun3(test_inner_fun);
 }
 
+// 闭包访问外部的参数
+fn test_closure_5() {
+
+    let data = 12;
+    test_fun(||{println!("test_closure_5 inner: {}", data)});
+    let mut data = 12;
+    test_fun4(||{data+=1;println!("test_closure_5 inner: {}", data)});
+
+    let data = 12;
+    test_fun5(||{println!("test_closure_5 inner: {}", data)});
+
+    println!("{}", data);
+}
+
+// 修饰无参的闭包
+fn test_fun<F>(f:F) where F:Fn() {
+    f();
+}
+
+// 修复一个参数的闭包
+fn test_fun1<F>(f:F) where F:Fn(i32) {
+    f(12)
+}
+
+// 修复两个参数的闭包
+fn test_fun2<F>(f:F) where F:Fn(i32, String) {
+    f(12, String::from("ds"))
+}
+
+// 修饰一个参数，一个返回值的闭包
+fn test_fun3<F>(f:F) where F:Fn(i32) -> i32 {
+    let data = f(32);
+    println!("fun data {}", data);
+}
+
+// 对于闭包作为参数的函数，也可以使用函数
+fn test_inner_fun(age: i32) -> i32 {
+    println!("test_inner_fun");
+    age + 1
+}
+
+// 类型FnMut
+fn test_fun4<F>(mut f:F) where F:FnMut() {
+    f()
+}
+
+fn test_fun5<F>(f: F) where F:FnOnce() {
+    f()
+}
