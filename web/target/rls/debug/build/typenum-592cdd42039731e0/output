@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/zhouzhenyong/project/rust-github/rust-learn/web/target/rls/debug/build/typenum-592cdd42039731e0/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/zhouzhenyong/project/rust-github/rust-learn/web/target/rls/debug/build/typenum-592cdd42039731e0/out/op.rs
