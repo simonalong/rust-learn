@@ -28,6 +28,8 @@ fn test_struct_1() {
         age: 12,
     };
     println!("test_struct_1: name= {}, age={}", my.name, my.age);
+    println!("test_struct_1: name= {:?}", my);
+    println!("test_struct_1: name= {:#?}", my);
 }
 
 // 测试元组
