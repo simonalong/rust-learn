@@ -110,7 +110,7 @@ struct Info{
 }
 
 #[get("/obj/get_res")]
-async fn get_obj_res() -> HttpResponse {
+async fn get_obj_res1() -> HttpResponse {
     HttpResponse::Ok().body(serde_json::to_string(&MyObj {
         name: String::from("data"),
     }).unwrap())
@@ -144,7 +144,6 @@ struct MyObj {
 }
 
 
-
 fn url_config(cfg: &mut web::ServiceConfig) {
     cfg
     .service(get_1)
@@ -159,8 +158,7 @@ fn url_config(cfg: &mut web::ServiceConfig) {
     .service(get_res_str)
     .service(get_res_res)
     .service(get_res_res_json)
-
-    .service(get_obj_res)
+    .service(get_obj_res1)
     .service(get_obj_res_str)
     .service(get_obj_res_res)
     .service(get_obj_res_res_json)
@@ -178,8 +176,3 @@ async fn main() -> Result<()> {
 
     HttpServer::new(app).bind("127.0.0.1:8080")?.run().await
 }
-
-
-
-
-
