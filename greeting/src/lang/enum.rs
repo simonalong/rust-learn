@@ -13,6 +13,7 @@ fn main() {
     test_enum_option2();
     test_enum_option3();
     test_enum_option4();
+    test_enum_option5();
 }
 
 #[derive(Debug)]
@@ -156,4 +157,11 @@ fn test_enum_option4() {
     } else {
         println!("kong");
     }
+}
+
+// 更加简化的写法，就是如果非空，则直接报错
+fn test_enum_option5() {
+    let data: Option<String> = Option::Some(String::from("nihao"));
+    let name = data.unwrap();
+    println!("{}", name)
 }
