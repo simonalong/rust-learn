@@ -109,22 +109,26 @@ struct Info{
     name: String
 }
 
-// #[get("/obj/get_res")]
-// async fn get_obj_res() -> HttpResponse {
-//     // HttpResponse::Ok().body(Info{name: String::from("data"), id:12})
-//     HttpResponse::Ok().body(MyObj {
-//         name: String::from("data"),
-//     })
-// }
+#[get("/obj/get_res")]
+async fn get_obj_res() -> HttpResponse {
+    HttpResponse::Ok().body(serde_json::to_string(&MyObj {
+        name: String::from("data"),
+    }).unwrap())
+}
 
 #[get("/obj/get_res_str")]
 async fn get_obj_res_str() -> Result<String> {
-    Ok(String::from("data"))
+    Ok(serde_json::to_string(&MyObj {
+        name: String::from("data"),
+    }).unwrap())
 }
 
 #[get("/obj/get_res_res")]
 async fn get_obj_res_res() -> Result<HttpResponse> {
-    Ok(HttpResponse::Ok().body("data"))
+    let data = MyObj {
+        name: String::from("data"),
+    };
+    Ok(HttpResponse::Ok().body(serde_json::to_string(&data).unwrap()))
 }
 
 #[get("/obj/get_res_res_json")]
@@ -133,7 +137,6 @@ async fn get_obj_res_res_json() -> Result<HttpResponse> {
         name: String::from("data"),
     }))
 }
-
 
 #[derive(Serialize, Deserialize)]
 struct MyObj {
@@ -157,6 +160,7 @@ fn url_config(cfg: &mut web::ServiceConfig) {
     .service(get_res_res)
     .service(get_res_res_json)
 
+    .service(get_obj_res)
     .service(get_obj_res_str)
     .service(get_obj_res_res)
     .service(get_obj_res_res_json)
