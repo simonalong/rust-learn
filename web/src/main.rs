@@ -102,7 +102,6 @@ async fn get_res_res_json() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().json("data"))
 }
 
-
 #[derive(Deserialize)]
 struct Info{
     id: u32,
@@ -142,7 +141,6 @@ async fn get_obj_res_res_json() -> Result<HttpResponse> {
 struct MyObj {
     name: String,
 }
-
 
 fn url_config(cfg: &mut web::ServiceConfig) {
     cfg
