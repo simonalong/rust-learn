@@ -199,6 +199,13 @@ pub struct NeoTable1 {
     pub sort: Option<i32>,
 }
 
+#[derive(CRUDTable, Serialize, Deserialize, Clone, Debug)]
+//表名称 NeoTable1=> "neo_table1"
+pub struct Demo1 {
+    pub id: Option<i64>,
+    pub name: Option<String>,
+}
+
 #[tokio::main]
 async fn main() {
     /// enable log crate to show sql logs
@@ -206,53 +213,26 @@ async fn main() {
     /// initialize rbatis. May use `lazy_static` crate to define rbatis as a global variable because rbatis is thread safe
     let rb = Rbatis::new();
     /// connect to database
-    rb.link("mysql://neo_test:neo@Test123@127.0.0.1:3306/neo").await.unwrap();
+    rb.link("mysql://neo_test:neo@Test123@127.0.0.1:3306/demo1").await.unwrap();
 
 
-    let activity = NeoTable1 {
-        id: Some("12312".to_string()),
-        name: None,
-        group: None,
-        user_name: Some(String::from("haode")),
-        age: Some(1),
-        sort: Some(1),
+    let activity = Demo1 {
+        id: None,
+        name: Some("12312".to_string()),
     };
 
     ///保存
     rb.save(&activity,&[]).await;
+
+    // 删除
+    rb.delete().await;
+
 //Exec ==> INSERT INTO biz_activity (create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )
 
-    ///批量保存
-    rb.save_batch(&vec![activity],&[]).await;
-//Exec ==> INSERT INTO biz_activity (create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ),( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )
+//     ///批量保存
+//     rb.save_batch(&vec![activity],&[]).await;
+// //Exec ==> INSERT INTO biz_activity (create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? ),( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )
 
-    ///查询, Option包装，有可能查不到数据则为None
-    let result: Option<NeoTable1> = rb.fetch_by_column("id", &"1".to_string()).await.unwrap();
-//Query ==> SELECT create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version  FROM biz_activity WHERE delete_flag = 1  AND id =  ?
-//
-//   ///查询-全部
-//   let result: Vec<NeoTable1> = rb.fetch_list("").await.unwrap();
-// //Query ==> SELECT create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version  FROM biz_activity WHERE delete_flag = 1
-//
-//   ///批量-查询id
-//   let result: Vec<NeoTable1> = rb.fetch_list_by_column("id",&["1".to_string()]).await.unwrap();
-//Query ==> SELECT create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version  FROM biz_activity WHERE delete_flag = 1  AND id IN  (?)
-
-//   ///自定义查询(使用wrapper)
-//   let w = rb.new_wrapper().eq("id", "1");
-//   let r: Result<Option<NeoTable1>, Error> = rb.fetch_by_wrapper( &w).await;
-// //Query ==> SELECT  create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version  FROM biz_activity WHERE delete_flag = 1  AND id =  ?
-//
-//   ///删除
-//   rb.remove_by_column::<NeoTable1,_>("id", &"1".to_string()).await;
-// //Exec ==> UPDATE biz_activity SET delete_flag = 0 WHERE id = 1
-//
-//   ///批量删除
-//   rb.remove_batch_by_column::<NeoTable1, _>("id", &["1".to_string(), "2".to_string()]).await;
-// //Exec ==> UPDATE biz_activity SET delete_flag = 0 WHERE id IN (  ?  ,  ?  )
-//
-//   ///修改(使用wrapper)
-//   let w = rb.new_wrapper().eq("id", "12312");
-//   rb.update_by_wrapper( &activity, &w).await;
-// //Exec ==> UPDATE biz_activity SET  create_time =  ? , delete_flag =  ? , status =  ? , version =  ?  WHERE id =  ?
+//     ///查询, Option包装，有可能查不到数据则为None
+//     let result: Option<NeoTable1> = rb.fetch_by_column("id", &"1".to_string()).await.unwrap();
 }

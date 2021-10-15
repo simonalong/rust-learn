@@ -175,8 +175,6 @@
 //     HttpServer::new(app).bind("127.0.0.1:8080")?.run().await
 // }
 
-
-
 #[macro_use]
 extern crate rbatis;
 
@@ -225,7 +223,6 @@ async fn main() {
     rb.save(&activity,&[]).await;
 
     // 删除
-    rb.delete().await;
 
 //Exec ==> INSERT INTO biz_activity (create_time,delete_flag,h5_banner_img,h5_link,id,name,pc_banner_img,pc_link,remark,sort,status,version) VALUES ( ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? )
 
