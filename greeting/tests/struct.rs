@@ -3,16 +3,18 @@
 /// 测试结构体
 ///
 /// ### 测试：切片
+#[test]
 fn main() {
-    test_struct_1();
-    test_struct_2();
-    test_struct_3();
-    test_struct_4();
-    test_struct_5();
-    test_struct_6();
-    test_struct_7();
-    test_struct_8();
-    test_struct_9();
+    // test_struct_1();
+    // test_struct_2();
+    // test_struct_3();
+    // test_struct_4();
+    // test_struct_5();
+    // test_struct_6();
+    // test_struct_7();
+    // test_struct_8();
+    // test_struct_9();
+    test_struct_10();
 }
 
 #[derive(Debug)]
@@ -156,3 +158,25 @@ impl Math {
 fn test_struct_9() {
     println!("test_struct_9: 1+3={}", Math::add_data(1, 3));
 }
+
+pub struct Neo {
+
+}
+
+impl Neo {
+    pub fn new() -> Neo {
+        Neo{}
+    }
+
+    pub fn fun(&self) -> u32 {
+        1  + 3
+    }
+}
+
+#[test]
+fn test_struct_10() {
+    let db = Neo::new();
+    println!("=============");
+    println!("====={}", db.fun());
+}
+

@@ -26,3 +26,8 @@ fn test_string3() {
     // Some('h')
     println!("{:?}", data.chars().nth(1));
 }
+
+fn test_str_sub() {
+    let data = "zhou";
+    println!("{}", data.to_string());
+}
