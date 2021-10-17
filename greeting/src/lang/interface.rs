@@ -54,9 +54,9 @@ struct MyClass2 {
     name: String
 }
 
-impl Comparable1 for MyClass2 {
+impl Comparable for MyClass2 {
     
-    fn compare(&self, object: &Self) -> i8 { 
+    fn compare(&self, object: &Self) -> i32 { 
         if &self.age > &object.age {
             1
         } else if &self.age == &object.age {

@@ -1,6 +1,7 @@
 use sqlx::mysql::{MySqlPoolOptions, MySqlQueryResult, MySqlRow};
 use sqlx::postgres::PgPoolOptions;
 use sqlx::Error;
+use futures_core::stream::BoxStream;
 use serde::{Serialize, Deserialize};
 use tokio::macros::support::Pin;
 

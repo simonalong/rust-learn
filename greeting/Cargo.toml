@@ -36,3 +36,10 @@ sqlx = {version = "0.5.9", features = ["mysql", "chrono", "runtime-tokio-rustls"
 # sqlx = { version = "0.5", features = [ "runtime-tokio-rustls" ] }
 # async-std + native-tls
 # sqlx = { version = "0.5", features = [ "runtime-async-std-native-tls" ] }
+
+# concurrent hashmap
+dashmap = {version="4.0.2", features=["all"]}
+
+flurry = "0.3.1"
+
+chashmap = "2.2.2"

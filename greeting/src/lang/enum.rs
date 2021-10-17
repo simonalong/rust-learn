@@ -137,7 +137,7 @@ fn test_enum_option2() {
     }
 }
 
-fn test_enum_option3() {
+fn test_enum_option3() -> String {
     let data: Option<String> = None;
     match data {
         Some(data) => {
@@ -145,6 +145,7 @@ fn test_enum_option3() {
         }
         _ => {
             println!("kong");
+            String::from("sdf")
         }
     }
 }
