@@ -16,6 +16,8 @@ fn test_map1() {
 
     println!("{:?}", data_map.get("b").unwrap());
 
+    println!("{:?}", data_map["a"]);
+
     println!("{:?}", data_map.contains_key("b"));
 
     // 循环迭代
