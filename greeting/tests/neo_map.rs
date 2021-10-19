@@ -1,4 +1,4 @@
-use serde_json::Number;
+use serde_json::{Number, Value};
 use std::collections::HashMap;
 use dashmap::mapref::one::{Ref, RefMut};
 use dashmap::mapref::entry::Entry;
@@ -8,23 +8,51 @@ use serde::ser::SerializeMap;
 use serde::Serialize;
 use std::ops::Index;
 use std::ops;
+use dashmap::DashMap;
+use std::iter::Map;
+use serde_json::json;
 
 pub struct NeoMap {
 
+    data_map: DashMap<String, Value>,
+    name: Value
 }
+
+// pub enum Value{
+//     Null,
+//
+//     Bool(bool),
+//     Number(Number),
+//
+//     String(String),
+//
+//     Array(Vec<Value>),
+//
+//     Object(Map<String, Value>),
+//
+//     NeoMap(NeoMap),
+// }
 
 impl NeoMap {
     pub fn new() -> Self {
-        NeoMap{}
+        NeoMap{name:Value::String(String::from("sdf")), data_map: DashMap::new()}
     }
+    //
+    // pub fn of(str: &[&str]) -> Self {
+    //     NeoMap{name:String::from("adf"), data_map: DashMap::new()}
+    // }
 }
 
-impl Index<usize> for NeoMap {
-    type Output = i32;
+impl Index<&str> for NeoMap {
+    type Output = Value;
 
-    fn index(&self, index: usize) -> &i32 {
-        &12
+    fn index(&self, index: &str) -> &Self::Output {
+        &self.name
     }
+    //
+    // fn index(&self, index: usize) -> &Self::Output {
+    //     self.0.index(index)
+    // }
 }
 //
 // pub trait Map<K, V> {
@@ -56,7 +84,7 @@ impl Index<usize> for NeoMap {
 #[test]
 pub fn test1() {
     let data_map = NeoMap::new();
-    let data = data_map[12];
+    let data = &data_map["k"];
 
     // 12
     println!("{}", data);
