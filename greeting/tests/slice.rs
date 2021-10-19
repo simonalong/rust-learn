@@ -1,8 +1,8 @@
 
 ///
-/// 
+///
 /// 这个概念与go里面的slice有点像，不过go里面这个切片是可变数组，但是在Rust这里，切片就是把结构中的数据进行切片处理
-/// 
+///
 /// ### 测试：切片
 fn main() {
     test_slice_1();
@@ -23,13 +23,14 @@ fn test_slice_1() {
 }
 
 // 测试切片：..的使用
+#[test]
 fn test_slice_2() {
-    let a = String::from("我们都是");
+    let a = String::from("womendoushi");
 
-    // let b = &a[..1]; // 等价于[0..2]
+    let b = &a[..1]; // 等价于[0..1]
     // let b = &a[1..];  // 等价于[1..end]
     // let b = &a[..];  // 等价于&a
-    // println!("test_slice_1 {}", b);
+    println!("test_slice_1 {}", b);
 }
 
 // 测试切片：一旦数据被分片租借，则不可在修改原始的数据

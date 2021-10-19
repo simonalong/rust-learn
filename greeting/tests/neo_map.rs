@@ -9,53 +9,10 @@ use serde::Serialize;
 use std::ops::Index;
 use std::ops;
 use dashmap::DashMap;
-use std::iter::Map;
 use serde_json::json;
 
-pub struct NeoMap {
 
-    data_map: DashMap<String, Value>,
-    name: Value
-}
-
-// pub enum Value{
-//     Null,
-//
-//     Bool(bool),
-//     Number(Number),
-//
-//     String(String),
-//
-//     Array(Vec<Value>),
-//
-//     Object(Map<String, Value>),
-//
-//     NeoMap(NeoMap),
-// }
-
-impl NeoMap {
-    pub fn new() -> Self {
-        NeoMap{name:Value::String(String::from("sdf")), data_map: DashMap::new()}
-    }
-    //
-    // pub fn of(str: &[&str]) -> Self {
-    //     NeoMap{name:String::from("adf"), data_map: DashMap::new()}
-    // }
-}
-
-impl Index<&str> for NeoMap {
-    type Output = Value;
-
-    fn index(&self, index: &str) -> &Self::Output {
-        &self.name
-    }
-    //
-    // fn index(&self, index: usize) -> &Self::Output {
-    //     self.0.index(index)
-    // }
-}
-//
-// pub trait Map<K, V> {
+// pub trait AbstractMap<String, Value> {
 //     fn put(key:K, v:v);
 //     fn del(key:K);
 //
@@ -81,13 +38,68 @@ impl Index<&str> for NeoMap {
 //     fn get_neo_map(key:K);
 // }
 
+
+pub struct NeoMap<'a> {
+    data_map: &'a DashMap<String, Value>,
+}
+
+/// 提供neo_map["key"]的能力
+impl Index<&str> for NeoMap<'_> {
+    type Output = Value;
+
+    fn index(&self, index: &str) -> &Value {
+        &self.get(index)
+    }
+}
+
+impl NeoMap<'_> {
+    pub fn new<'a>() -> &'a NeoMap<'a> {
+        &NeoMap{ data_map: &DashMap::new() }
+    }
+
+    pub fn get<'a>(&'a self, key: &str) -> &'a Value {
+        // &((*self).data_map.get(key).unwrap())
+        self.data_map.get(key).unwrap().value()
+    }
+
+    // pub fn of(kv_str: &[&str]) -> Self {
+    //     if kv_str.len() % 2 != 0 {
+    //         panic!("参数请使用：key,value,key,value...这种参数格式")
+    //     }
+    //
+    //     let neo_map = NeoMap::new();
+    //     let mut i = 0;
+    //     while i < kv_str.len() {
+    //         neo_map.put(kv_str[i], &Value::from(kv_str[i + 1]).clone());
+    //         i += 2
+    //     }
+    //
+    //     neo_map
+    // }
+}
+
+impl NeoMap<'_> {
+
+    pub fn put(&self, key: &str, n: &Value) {
+
+    }
+
+
+}
+
 #[test]
 pub fn test1() {
-    let data_map = NeoMap::new();
-    let data = &data_map["k"];
+    let neo_map = NeoMap::new();
+    // neo_map.put("k", &Value::from("v"));
+    // let data = &data_map["k"];
 
-    // 12
-    println!("{}", data);
+    println!("{}", neo_map.get("k"));
+
+    // let data_map = DashMap::new();
+    // data_map.insert("k", Value::from("v"));
+    // // data_map.insert("k", "v");
+    //
+    // println!("{}", *data_map.get("k").unwrap());
 }
 
 

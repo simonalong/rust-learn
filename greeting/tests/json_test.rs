@@ -25,8 +25,9 @@ fn test_json1() {
         }"#;
 
     let value:Value = serde_json::from_str(data).unwrap();
+    let data = value.get("k1").unwrap();
     println!("{}", value["k1"]);
-    println!("{}", value.get("k1").unwrap().get("k2").unwrap());
+    println!("{}", value.get("k1").unwrap());
     println!("{}", value["k1"]["k2"]);
     println!("{}", value["k1"]["k2"]["k3"]);
     println!("{}", value["k1"]["k4"]);

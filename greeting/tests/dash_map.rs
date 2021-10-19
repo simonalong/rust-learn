@@ -58,5 +58,18 @@ pub fn test4() {
 
 #[test]
 pub fn test5() {
-    // ConcurrentHashMap::new();
+    let map = DashMap::new();
+    map.insert("key1", 12);
+    map.insert("key2", 32);
+    map.insert("key3", 21);
+
+    // 3
+    println!("{}", *map.get("key1").unwrap());
+}
+
+#[test]
+pub fn test6() {
+    let youtubers = DashMap::new();
+    youtubers.insert("Bosnian Bill", 457000);
+    assert_eq!(*youtubers.get("Bosnian Bill").unwrap(), 457000);
 }

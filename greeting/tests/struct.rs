@@ -180,3 +180,18 @@ fn test_struct_10() {
     println!("====={}", db.fun());
 }
 
+#[test]
+fn test_struct_11() {
+    let t = getTest();
+
+    println!("{:?}", t);
+}
+
+#[derive(Debug)]
+pub struct Test<'a>{
+    name: &'a str
+}
+
+fn getTest<'a>() -> &'a Test<'a> {
+    &Test{name: "zhou"}
+}
