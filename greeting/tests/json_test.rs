@@ -35,6 +35,24 @@ fn test_json1() {
 }
 
 #[test]
+fn test_json2() {
+    let data = r#"
+        {
+            "name": "John Doe",
+            "age": 43
+        }"#;
+
+    let value:Info = serde_json::from_str(data).unwrap();
+    println!("{:?}", value);
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Info {
+    name: String,
+    age: i32
+}
+
+#[test]
 fn test_2() {
     let mut data_map = DashMap::new();
     // let mut  data_map= HashMap::new();
@@ -43,6 +61,14 @@ fn test_2() {
 
     println!("{}", serde_json::to_string(&data_map).unwrap());
 }
+
+#[test]
+fn test_3() {
+    let v = Value::from("va");
+    let s = v.as_str().unwrap();
+    println!("{}", s);
+}
+
 //
 // impl Serialize for DashMap<String, String>
 // {

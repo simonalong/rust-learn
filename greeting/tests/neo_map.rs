@@ -38,68 +38,105 @@ use serde_json::json;
 //     fn get_neo_map(key:K);
 // }
 
-
-pub struct NeoMap<'a> {
-    data_map: &'a DashMap<String, Value>,
-}
-
 /// 提供neo_map["key"]的能力
-impl Index<&str> for NeoMap<'_> {
-    type Output = Value;
+// impl Index<&str> for NeoMap<'_> {
+//     type Output = Value;
+//
+//     fn index(&self, index: &str) -> &Value {
+//         &self.get(index)
+//     }
+// }
+#[test]
+fn test_struct_11() {
+    let t = getTest();
 
-    fn index(&self, index: &str) -> &Value {
-        &self.get(index)
-    }
+    println!("{:?}", t);
 }
 
-impl NeoMap<'_> {
-    pub fn new<'a>() -> &'a NeoMap<'a> {
-        &NeoMap{ data_map: &DashMap::new() }
-    }
+#[derive(Debug)]
+pub struct Test<'a> {
+    name: &'a str
+}
 
-    pub fn get<'a>(&'a self, key: &str) -> &'a Value {
-        // &((*self).data_map.get(key).unwrap())
-        self.data_map.get(key).unwrap().value()
-    }
+fn getTest<'a>() -> &'a Test<'a> {
+    &Test { name: "zhou" }
+}
 
-    // pub fn of(kv_str: &[&str]) -> Self {
-    //     if kv_str.len() % 2 != 0 {
-    //         panic!("参数请使用：key,value,key,value...这种参数格式")
-    //     }
+
+// pub fn get_data_map(&self) -> &DashMap<String, Value> {
+//     &self.data_map
+// }
+//
+// pub fn put(&self, key: &str, value: &Value) {
+//     self.data_map.insert(String::from(key), value.clone());
+// }
+// neo_map.put("key", &Value::from("v"));
+// let map = neo_map.get_data_map();
+// println!("{:?}", map);
+// let value = &*map.get("key").unwrap();
+
+#[rustc_diagnostic_item = "From"]
+#[stable(feature = "rust1", since = "1.0.0")]
+#[rustc_on_unimplemented(on(
+all(_Self = "&str", T = "std::string::String"),
+note = "to coerce a `{T}` into a `{Self}`, use `&*` as a prefix",
+))]
+pub trait Putter<T>: Sized {
+    /// Performs the conversion.
+    #[lang = "from"]
+    #[must_use]
+    #[stable(feature = "rust1", since = "1.0.0")]
+    fn put(&self, key: &str, _: T) -> &Self;
+}
+
+pub struct NeoMap {
+    data_map: DashMap<String, Value>,
+}
+
+impl NeoMap {
+    pub fn new() -> Self {
+        NeoMap { data_map: DashMap::new() }
+    }
     //
-    //     let neo_map = NeoMap::new();
-    //     let mut i = 0;
-    //     while i < kv_str.len() {
-    //         neo_map.put(kv_str[i], &Value::from(kv_str[i + 1]).clone());
-    //         i += 2
-    //     }
-    //
-    //     neo_map
+    // pub fn put(&self, key: &str, value: &Value) {
+    //     self.data_map.insert(String::from(key), value.clone());
     // }
-}
 
-impl NeoMap<'_> {
-
-    pub fn put(&self, key: &str, n: &Value) {
-
+    pub fn get_i64(&self, key: &str) -> Option<i64> {
+        let value = &*self.data_map.get(key).unwrap();
+        value.as_i64()
     }
-
-
 }
+
+impl Putter<&str> for NeoMap {
+    /// Converts a `&str` into a [`String`].
+    ///
+    /// The result is allocated on the heap.
+    #[inline]
+    fn put(&self, key: &str, value: &str) -> &NeoMap {
+        self.data_map.insert(String::from(key), Value::from(value));
+        self
+    }
+}
+
+impl Putter<String> for NeoMap {
+    /// Converts a `&str` into a [`String`].
+    ///
+    /// The result is allocated on the heap.
+    #[inline]
+    fn put(&self, key: &str, value: String) -> &NeoMap {
+        self.data_map.insert(String::from(key), Value::from(value));
+        self
+    }
+}
+
 
 #[test]
 pub fn test1() {
     let neo_map = NeoMap::new();
-    // neo_map.put("k", &Value::from("v"));
-    // let data = &data_map["k"];
-
-    println!("{}", neo_map.get("k"));
-
-    // let data_map = DashMap::new();
-    // data_map.insert("k", Value::from("v"));
-    // // data_map.insert("k", "v");
-    //
-    // println!("{}", *data_map.get("k").unwrap());
+    neo_map.put("key", "value");
+    println!("{:?}", neo_map.get_i64("key"));
+    println!("data");
 }
 
 
