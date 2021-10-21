@@ -40,3 +40,8 @@ fn test_str_sub() {
     let data = "zhou";
     println!("{}", data.to_string());
 }
+
+#[test]
+pub fn string_test() {
+    let a = String::from("c");
+}

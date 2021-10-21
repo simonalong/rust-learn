@@ -46,6 +46,34 @@ fn test_json2() {
     println!("{:?}", value);
 }
 
+#[test]
+fn test_json3() {
+    let data = r#"
+        {
+            "name": "John Doe",
+            "age": 43
+        }"#;
+
+    let value:Value = serde_json::from_str(data).unwrap();
+    println!("{:?}", value);
+    let value:Info = serde_json::from_value(value).unwrap();
+    println!("{:?}", value);
+}
+
+#[test]
+fn test_json4() {
+    let data = r#"
+        {
+            "name": "John Doe",
+            "age": 43
+        }"#;
+
+    let value:Value = serde_json::from_str(data).unwrap();
+    let map = value.as_object().unwrap();
+
+    println!("{:?}", map);
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Info {
     name: String,
@@ -56,10 +84,16 @@ pub struct Info {
 fn test_2() {
     let mut data_map = DashMap::new();
     // let mut  data_map= HashMap::new();
-    data_map.insert("k1", "v1");
-    data_map.insert("k2", "v2");
+    data_map.insert("name", Value::from("zhou"));
+    data_map.insert("age", Value::from(12));
 
-    println!("{}", serde_json::to_string(&data_map).unwrap());
+    // let string = serde_json::to_value(data_map).unwrap();
+    // let data: AsClass = serde_json::from_value(string).unwrap();
+
+    let string = serde_json::to_string(&data_map).unwrap();
+    let data: AsClass = serde_json::from_str(string.as_str()).unwrap();
+
+    println!("{:?}", data);
 }
 
 #[test]
@@ -67,6 +101,12 @@ fn test_3() {
     let v = Value::from("va");
     let s = v.as_str().unwrap();
     println!("{}", s);
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct AsClass{
+    name: String,
+    age: i32
 }
 
 //

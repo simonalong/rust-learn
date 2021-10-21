@@ -73,3 +73,28 @@ pub fn test6() {
     youtubers.insert("Bosnian Bill", 457000);
     assert_eq!(*youtubers.get("Bosnian Bill").unwrap(), 457000);
 }
+
+
+#[test]
+pub fn test7() {
+    let map = DashMap::new();
+    map.insert("key1", 1);
+    map.insert("key2", 2);
+    map.insert("key3", 3);
+
+    // 3
+    println!("{}", serde_json::to_string(&map).unwrap());
+
+    let map1 = DashMap::new();
+    map1.insert("key3", 3);
+    map1.insert("key1", 1);
+    map1.insert("key2", 2);
+
+    let mut count_vec = map1.iter().collect();
+    count_vec.sort_by(|a, b| b.1.cmp(a.1));
+
+    // 3
+    println!("{}", serde_json::to_string(&map1).unwrap());
+
+    assert_eq!(serde_json::to_string(&map).unwrap(), serde_json::to_string(&map1).unwrap())
+}
