@@ -90,11 +90,30 @@ pub fn test7() {
     map1.insert("key1", 1);
     map1.insert("key2", 2);
 
-    let mut count_vec = map1.iter().collect();
-    count_vec.sort_by(|a, b| b.1.cmp(a.1));
-
     // 3
     println!("{}", serde_json::to_string(&map1).unwrap());
 
     assert_eq!(serde_json::to_string(&map).unwrap(), serde_json::to_string(&map1).unwrap())
+}
+
+
+#[test]
+pub fn test8() {
+    let map = DashMap::new();
+    map.insert("key1", 1);
+    map.insert("key2", 2);
+    map.insert("key3", 3);
+
+    // let data: Vec<_> = map.into_iter().collect();
+    // let m = data.map(|x|(x.))
+    // println!("{:?}", data);
+
+    // let vec: Vec<&str, _> = map.into_iter().collect();
+    // let m = vec.map(|x|(x.0)).collect();
+    //
+    // println!("vec :{:?}", m);
+
+    for (k, v) in map {
+        println!("vec :{:?}", m);
+    }
 }

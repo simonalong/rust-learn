@@ -37,21 +37,54 @@ use serde_json::Value;
 
 #[test]
 fn test_map1() {
+    // let mut data_map = HashMap::new();
+    //
+    // data_map.insert("a", 1);
+    // data_map.insert("b", 2);
+    //
+    // let data = data_map.iter();
+    // for (k, v) in data_map {
+    //
+    // }
+    //
+    // // let keys = &data_map.keys();
+    // println!("keys {:?}", data_map.keys());
+    //
+    // println!("{:?}", data_map);
+    //
+    // println!("{:?}", data_map.get("b").unwrap());
+    //
+    // println!("{:?}", data_map["a"]);
+    //
+    // println!("{:?}", data_map.contains_key("b"));
+    //
+    // // 循环迭代
+    // for ele in data_map {
+    //     println!("key = {}, value= {}", ele.0, ele.1);
+    // }
+}
+
+#[test]
+fn test_map2() {
     let mut data_map = HashMap::new();
 
     data_map.insert("a", 1);
     data_map.insert("b", 2);
 
-    println!("{:?}", data_map);
-
-    println!("{:?}", data_map.get("b").unwrap());
-
-    println!("{:?}", data_map["a"]);
-
-    println!("{:?}", data_map.contains_key("b"));
-
-    // 循环迭代
-    for ele in data_map {
-        println!("key = {}, value= {}", ele.0, ele.1);
-    }
+    data_map.keys();
 }
+
+// #[test]
+// fn test4() {
+//     let m = tt();
+//
+//     println!("{}", (*m).0);
+// }
+
+// fn tt() -> &(i32, Vec<String>) {
+//     let mut array = Vec::new();
+//     array.push(String::from("a"));
+//     array.push(String::from("b"));
+//     &(12, array)
+// }
+
